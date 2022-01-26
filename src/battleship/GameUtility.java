@@ -10,11 +10,7 @@ public class GameUtility {
 
         // Convert letter to number for array processing
         start = convertLetterToNumber(input.charAt(0));
-        if (input.length() > 2) {
-            end = 10;
-        } else {
-            end = Integer.parseInt("" + input.charAt(1));
-        }
+        end = input.length() > 2 ? 10 : Integer.parseInt("" + input.charAt(1));
         return new Position(start, end);
     }
 
