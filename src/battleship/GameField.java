@@ -1,7 +1,9 @@
 package battleship;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameField {
     enum ShipName {
@@ -44,7 +46,7 @@ public class GameField {
         return true;
     }
 
-    public List<ShipPosition> getShipPositions() {
+    public  List<ShipPosition> getShipPositions() {
         List<ShipPosition> shipPositionList = new ArrayList<>();
 
         if (aircraftCarrier.getPosition() != null) {
@@ -70,6 +72,45 @@ public class GameField {
         return shipPositionList;
     }
 
+    public boolean takeAShot(char letter, int number) {
+        if (aircraftCarrier.hasShipPosition(letter, number)) {
+            aircraftCarrier.setHit(letter, number);
+            if (aircraftCarrier.isShipSunk()) {
+                return true;
+            }
+        }
+
+        if (battleship.hasShipPosition(letter, number)) {
+            battleship.setHit(letter, number);
+            if (battleship.isShipSunk()) {
+                return true;
+            }
+        }
+
+        if (submarine.hasShipPosition(letter, number)) {
+            submarine.setHit(letter, number);
+            if (submarine.isShipSunk()) {
+                return true;
+            }
+        }
+
+        if (cruiser.hasShipPosition(letter, number)) {
+            cruiser.setHit(letter, number);
+            if (cruiser.isShipSunk()) {
+                return true;
+            }
+        }
+
+        if (destroyer.hasShipPosition(letter, number)) {
+            destroyer.setHit(letter, number);
+            if (destroyer.isShipSunk()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -93,5 +134,26 @@ public class GameField {
             stringBuilder.append("Destroyer\n" + destroyer.getPosition().toString());
         }
         return stringBuilder.toString();
+    }
+
+    public void setHitMap(ShipName name, HashMap<String, Boolean> map) {
+
+        switch (name) {
+            case AIRCRAFT_CARRIER:
+                aircraftCarrier.setShipMap(map);
+                break;
+            case BATTLESHIP:
+                battleship.setShipMap(map);
+                break;
+            case SUBMARINE:
+                submarine.setShipMap(map);
+                break;
+            case CRUISER:
+                cruiser.setShipMap(map);
+                break;
+            case DESTROYER:
+                destroyer.setShipMap(map);
+                break;
+        }
     }
 }
